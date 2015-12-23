@@ -1,3 +1,3 @@
 language: android
 install: true
-script: ant main
+script: ant release
