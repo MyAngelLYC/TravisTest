@@ -1,0 +1,5 @@
+<project name="Test" default="main">
+  <target name="main">
+    <echo>build success</echo>
+  </target>
+</project>
