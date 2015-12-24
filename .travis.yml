@@ -1,13 +1,12 @@
 language: android
-android:
-  components:
-    # The BuildTools version used by your project
-    - build-tools-18.0.1
-
-    # The SDK version used to compile your project
-    - android-19
 before_install:
+    - sudo apt-get update -qq
+    - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
+    - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
+    - tar xzf android-sdk_r21.0.1-linux.tgz
     - export ANDROID_HOME=$PWD/android-sdk-linux
-    - echo $ANDROID_HOME
+    - cd android-sdk-linux/tools
+    - android list sdk
+    #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 install: true
-script: ant release
+script: ant buildRelease

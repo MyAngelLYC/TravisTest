@@ -1,92 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="MyActivity" default="help">
+<!--
+-package 打包
+    -dex 打包代码
+        -compile 编译
+            -build-setup 编译配置
+                -setup 通用配置
+                    -check-env 检查环境
+            -code-gen 产生R.java
+        -obfuscate 混淆
+    -package-resources 打包资源
+        -crunch
+-release-sign 签名
+    signapk 签名
+    zipalign-helper 对齐优化
+-->
+<project name="TravisTest" default="buildRelease">
+    <!-- Input directories -->
+    <property name="project.dir" value="." />
+    <property name="source.dir" value="${project.dir}/src" />
+    <property name="gen.dir" location="${project.dir}/gen" />
+    <property name="res.dir" location="${project.dir}/res" />
+    <property name="asset.dir" value="${project.dir}/assets" />
+    <property name="jar.libs.dir" value="${project.dir}/libs" />
+    <property name="native.libs.dir" location="${project.dir}/libs" />
 
-    <!-- The local.properties file is created and updated by the 'android' tool.
-         It contains the path to the SDK. It should *NOT* be checked into
-         Version Control Systems. -->
-    <property file="local.properties" />
+    <property name="manifest.file" value="${project.dir}/AndroidManifest.xml" />
 
-    <!-- The ant.properties file can be created by you. It is only edited by the
-         'android' tool to add properties to it.
-         This is the place to change some Ant specific build properties.
-         Here are some properties you may want to change/update:
+    <!-- Output directories -->
+    <property name="out.dir" value="${project.dir}/bin" />
+    <property name="out.classes.absolute.dir" location="${out.dir}/classes" />
+    <property name="out.res.absolute.dir" location="${out.dir}/res" />
+    <property name="out.rs.obj.absolute.dir" location="${out.dir}/rsObj" />
+    <property name="out.rs.libs.absolute.dir" location="${out.dir}/rsLibs" />
+    <property name="out.aidl.absolute.dir" location="${out.dir}/aidl" />
+    <property name="out.dexed.absolute.dir" location="${out.dir}/dexedLibs" />
 
-         source.dir
-             The name of the source directory. Default is 'src'.
-         out.dir
-             The name of the output directory. Default is 'bin'.
+    <!-- tools location -->
+    <property name="sdk.dir" location="D:\AndroidBuddle\sdk" />
+    <property name="android.jar" location="${sdk.dir}/platforms/android-8/android.jar" />
+    <property name="android.tools.dir" location="${sdk.dir}/tools" />
+    <property name="android.build.tools.dir" location="${sdk.dir}/build-tools" />
+    <property name="android.platform.tools.dir" location="${sdk.dir}/platform-tools" />
+    <condition property="exe" value=".exe" else=""><os family="windows" /></condition>
+    <condition property="bat" value=".bat" else=""><os family="windows" /></condition>
+    <property name="adb" location="${android.platform.tools.dir}/adb${exe}" />
+    <property name="lint" location="${android.tools.dir}/lint${bat}" />
+    <property name="aidl" location="${android.platform.tools.dir}/aidl${exe}" />
+    <property name="aapt" location="${android.platform.tools.dir}/aapt${exe}" />
+    <property name="dx" location="${android.platform.tools.dir}/dx${bat}" />
+    <property name="zipalign" location="${android.tools.dir}/zipalign${exe}" />
 
-         For other overridable properties, look at the beginning of the rules
-         files in the SDK, at tools/ant/build.xml
+    <!-- Intermediate files -->
+    <property name="dex.file.name" value="classes.dex" />
+    <property name="intermediate.dex.file" location="${out.absolute.dir}/${dex.file.name}" />
+    <property name="resource.package.file.name" value="${ant.project.name}.ap_" />
 
-         Properties related to the SDK location or the project target should
-         be updated using the 'android' tool with the 'update' action.
+    <!-- Build property file -->
+    <property name="out.build.prop.file" location="${out.absolute.dir}/build.prop" />
 
-         This file is an integral part of the build system for your
-         application and should be checked into Version Control Systems.
 
-         -->
-    <property file="ant.properties" />
+    <!-- 执行脚本 -->
+    <target name="buildRelease">
+        <echo>Begin build release version ---> 构建开始</echo>
+        <antcall target="init"/>
+        <!--
+        <antcall target="code-gen"/>-->
+    </target>
 
-    <!-- if sdk.dir was not set from one of the property file, then
-         get it from the ANDROID_HOME env var.
-         This must be done before we load project.properties since
-         the proguard config can use sdk.dir -->
-    <property environment="env" />
-    <condition property="sdk.dir" value="${env.ANDROID_HOME}">
-        <isset property="env.ANDROID_HOME" />
-    </condition>
+    <!-- 初始化文件目录 -->
+    <target name="init">
+        <delete dir="${out.dir}" failonerror="false"/>
+        <delete dir="${gen.dir}" failonerror="false"/>
+        <mkdir dir="${out.dir}"/>
+        <mkdir dir="${gen.dir}"/>
+    </target>
 
-    <!-- The project.properties file is created and updated by the 'android'
-         tool, as well as ADT.
-
-         This contains project specific properties such as project target, and library
-         dependencies. Lower level build properties are stored in ant.properties
-         (or in .classpath for Eclipse projects).
-
-         This file is an integral part of the build system for your
-         application and should be checked into Version Control Systems. -->
-    <loadproperties srcFile="project.properties" />
-
-    <!-- quick check on sdk.dir -->
-    <fail
-            message="sdk.dir is missing. Make sure to generate local.properties using 'android update project' or to inject it through the ANDROID_HOME environment variable."
-            unless="sdk.dir"
-    />
-
-    <!--
-        Import per project custom build rules if present at the root of the project.
-        This is the place to put custom intermediary targets such as:
-            -pre-build
-            -pre-compile
-            -post-compile (This is typically used for code obfuscation.
-                           Compiled code location: ${out.classes.absolute.dir}
-                           If this is not done in place, override ${out.dex.input.absolute.dir})
-            -post-package
-            -post-build
-            -pre-clean
-    -->
-    <import file="custom_rules.xml" optional="true" />
-
-    <!-- Import the actual build file.
-
-         To customize existing targets, there are two options:
-         - Customize only one target:
-             - copy/paste the target into this file, *before* the
-               <import> task.
-             - customize it to your needs.
-         - Customize the whole content of build.xml
-             - copy/paste the content of the rules files (minus the top node)
-               into this file, replacing the <import> task.
-             - customize to your needs.
-
-         ***********************
-         ****** IMPORTANT ******
-         ***********************
-         In all cases you must update the value of version-tag below to read 'custom' instead of an integer,
-         in order to avoid having your file be overridden by tools such as "android update project"
-    -->
-    <!-- version-tag: 1 -->
-    <import file="${sdk.dir}/tools/ant/build.xml" />
-
+    <!-- 生成代码 -->
+    <target name="code-gen">
+        <exec executable="${aapt}" failonerror="true">
+          <arg value="package"/>
+          <arg value="-m"/>
+          <arg value="-J"/>
+          <arg value="${gen.dir}"/>
+          <arg value="-M"/>
+          <arg value="${manifest.file}"/>
+          <arg value="-S"/>
+          <arg value="${res.dir}"/>
+          <arg value="-I"/>
+          <arg value="${android.jar}"/>
+        </exec>
+    </target>
 </project>
