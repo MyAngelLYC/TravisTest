@@ -36,8 +36,8 @@
     <property name="out.dexed.absolute.dir" location="${out.dir}/dexedLibs" />
 
     <!-- tools location -->
-    <property name="sdk.dir" location="D:\AndroidBuddle\sdk" />
-    <property name="android.jar" location="${sdk.dir}/platforms/android-8/android.jar" />
+    <condition property="sdk.dir" value="D:\AndroidBuddle\sdk" else="/usr/local/android-sdk/"><os family="windows" /></condition>
+    <property name="android.jar" location="${sdk.dir}/platforms/android-19/android.jar" />
     <property name="android.tools.dir" location="${sdk.dir}/tools" />
     <property name="android.build.tools.dir" location="${sdk.dir}/build-tools" />
     <property name="android.platform.tools.dir" location="${sdk.dir}/platform-tools" />
@@ -63,8 +63,7 @@
     <target name="buildRelease">
         <echo>Begin build release version ---> 构建开始</echo>
         <antcall target="init"/>
-        <!--
-        <antcall target="code-gen"/>-->
+        <antcall target="code-gen"/>
     </target>
 
     <!-- 初始化文件目录 -->

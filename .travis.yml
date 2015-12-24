@@ -5,12 +5,5 @@ android:
     - tools
     - build-tools-23.0.1
     - android-19
-before_install:
-    - echo $PWD
-    - echo $PATH
-    - cd android-sdk-linux
-    - ls -al
-    - cd ..
-    #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 install: true
 script: ant buildRelease
