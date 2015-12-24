@@ -1,8 +1,8 @@
 language: android
 android:
   components:
-    - platform-tools
     - tools
+    - platform-tools    
     - build-tools-23.0.1
     - android-19
 install: true
