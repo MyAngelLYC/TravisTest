@@ -1,12 +1,15 @@
 language: android
+android:
+  components:
+    - platform-tools
+    - tools
+    - build-tools-23.0.1
+    - android-19
 before_install:
-    - sudo apt-get update -qq
-    - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
-    - wget http://dl.google.com/android/android-sdk_r21.0.1-linux.tgz
-    - tar xzf android-sdk_r21.0.1-linux.tgz
-    - export ANDROID_HOME=$PWD/android-sdk-linux
-    - cd android-sdk-linux/tools
-    - android list sdk
+    - echo $PWD
+    - cd android-sdk-linux
+    - ls -al
+    - cd ..
     #- export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 install: true
 script: ant buildRelease
