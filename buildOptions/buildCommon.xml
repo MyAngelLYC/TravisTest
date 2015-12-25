@@ -20,7 +20,7 @@
     <property name="source.dir" value="${project.dir}/src" />
     <property name="gen.dir" location="${project.dir}/gen" />
     <property name="res.dir" location="${project.dir}/res" />
-    <property name="asset.dir" value="${project.dir}/assets" />
+    <property name="assets.dir" value="${project.dir}/assets" />
     <property name="jar.libs.dir" value="${project.dir}/libs" />
     <property name="native.libs.dir" location="${project.dir}/libs" />
     <property name="manifest.file" value="${project.dir}/AndroidManifest.xml" />
@@ -81,7 +81,9 @@
     <target name="init">
         <echo message="生成编译所需目录结构"/>
         <mkdir dir="${gen.dir}"/>        
-        <mkdir dir="${out.dir}"/>        
+        <mkdir dir="${out.dir}"/>
+        <available file="${assets.dir}" property="assetsDIR_exist"/>
+        <mkdir dir="${assets.dir}" unless="assetsDIR_exist"/>      
         <mkdir dir="${out.classes.absolute.dir}"/>
         <mkdir dir="${out.res.absolute.dir}"/>
     </target>
@@ -149,7 +151,7 @@
             <arg value="-S" />
             <arg value="${res.dir}" />
             <arg value="-A" />
-            <arg value="${asset.dir}" />
+            <arg value="${assets.dir}" />
             <arg value="-I" />
             <arg value="${android.jar}" />
             <arg value="-F" />
