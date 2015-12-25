@@ -3,13 +3,9 @@
 通用构建入口，根据系统类型调用不同的构建脚本
 -->
 <project name="TravisTest" default="buildRelease">
-    <condition property="osName" value="windows"><os family="windows"/></condition>
-    <condition property="osName" value="mac"><os family="mac"/></condition>
-    <condition property="osName" value="linux"><os name="Linux"/></condition>
-    <echo message="Current OS Name is ${osName}"/>
-    
-    <condition property="isLinux">  
-        <equals arg1="${osName}" arg2="linux"/>
-    </condition>  
-    <import file="buildOptions/buildOnLinux.xml" if="isLinux"/> 
+    <condition property="osName" value="Windows"><os family="windows"/></condition>
+    <condition property="osName" value="Mac"><os family="mac"/></condition>
+    <condition property="osName" value="Linux"><os name="Linux"/></condition>
+    <echo message="Current OS Name is ${osName}"/>  
+    <import file="buildOptions/buildOn${osName}.xml"/> 
 </project>
