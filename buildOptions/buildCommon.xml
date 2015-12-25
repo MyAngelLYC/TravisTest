@@ -42,6 +42,13 @@
     <!-- Build property file -->
     <property name="out.build.prop.file" location="${out.absolute.dir}/build.prop" />
     
+    <!-- compilation options -->
+    <property name="java.encoding" value="UTF-8" />
+    <property name="java.target" value="1.7" />
+    <property name="java.source" value="1.7" />
+    <property name="java.compilerargs" value="" />
+    <property name="java.compiler.classpath" value="" />
+
     <!-- 执行脚本 -->
     <target name="buildRelease">
         <echo message="Current OS Name is ${osName}"/>  
@@ -49,22 +56,27 @@
         <antcall target="clean"/>
         <antcall target="init"/>
         <antcall target="code-gen"/>
+        <antcall target="compile"/>
     </target>
 
     <!-- 清除编译中间文件 -->
     <target name="clean">
-        <delete dir="${out.dir}" failonerror="false"/>
+        <echo message="清除上次编译产生的中间文件"/>
         <delete dir="${gen.dir}" failonerror="false"/>
+        <delete dir="${out.dir}" failonerror="false"/>        
     </target>
 
     <!-- 初始化文件目录 -->
-    <target name="init">        
-        <mkdir dir="${out.dir}"/>
-        <mkdir dir="${gen.dir}"/>
+    <target name="init">
+        <echo message="生成编译所需目录结构"/>
+        <mkdir dir="${gen.dir}"/>        
+        <mkdir dir="${out.dir}"/>        
+        <mkdir dir="${out.classes.absolute.dir}"/>
     </target>
 
     <!-- 生成代码 -->
     <target name="code-gen">
+        <echo message="生成R.java文件"/> 
         <exec executable="${aapt}" failonerror="true">
           <arg value="package"/>
           <arg value="-m"/>
@@ -77,5 +89,22 @@
           <arg value="-I"/>
           <arg value="${android.jar}"/>
         </exec>
+    </target>
+
+    <!-- 编译代码为.class文件 -->
+    <target name="compile">
+        <echo message="编译java代码为class文件"/> 
+        <javac encoding="UTF-8"
+            debug="true"
+            extdirs=""
+            target="1.6"
+            destdir="${out.classes.absolute.dir}"
+            bootclasspath="${android.jar}"
+            nowarn="true"                      
+            fork="true"
+            memoryMaximumSize="1024m" >
+            <src path="${source.dir}" />
+            <src path="${gen.dir}" />
+        </javac>
     </target>
 </project>
