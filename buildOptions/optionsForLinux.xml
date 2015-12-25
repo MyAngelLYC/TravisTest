@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="optionsForLinux" default="">
     <!-- tools location -->
-    <condition property="sdk.dir" value="D:\AndroidBuddle\sdk" else="/usr/local/android-sdk/"><os family="windows" /></condition>
+    <property name="sdk.dir" value="/usr/local/android-sdk/" />
     <property name="android.jar" location="${sdk.dir}/platforms/android-19/android.jar" />
     <property name="android.tools.dir" location="${sdk.dir}/tools" />
     <property name="android.build.tools.dir" location="${sdk.dir}/build-tools/23.0.1" />
