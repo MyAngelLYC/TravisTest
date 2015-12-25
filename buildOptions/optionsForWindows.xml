@@ -2,6 +2,7 @@
 <project name="optionsForWindows" default="">
     <!-- tools location -->
     <property name="sdk.dir" value="D:\AndroidBuddle\sdk" />
+    <property name="java.dir" value="D:\Java\jdk1.8.0_45" />
     <property name="android.jar" location="${sdk.dir}/platforms/android-8/android.jar" />
     <property name="android.tools.dir" location="${sdk.dir}/tools" />
     <property name="android.build.tools.dir" location="${sdk.dir}/build-tools/23.0.1" />
@@ -15,4 +16,5 @@
     <property name="dx" location="${android.platform.tools.dir}/dx${bat}" />
     <property name="zipalign" location="${android.platform.tools.dir}/zipalign${exe}" />
     <property name="apkbuilder" location="${android.tools.dir}/apkbuilder${bat}" />
+    <property name="jarsigner" location="${java.dir}/bin/jarsigner${exe}" />
 </project>
