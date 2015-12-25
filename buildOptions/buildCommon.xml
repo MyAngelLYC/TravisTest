@@ -23,7 +23,6 @@
     <property name="asset.dir" value="${project.dir}/assets" />
     <property name="jar.libs.dir" value="${project.dir}/libs" />
     <property name="native.libs.dir" location="${project.dir}/libs" />
-
     <property name="manifest.file" value="${project.dir}/AndroidManifest.xml" />
 
     <!-- Output directories -->
@@ -45,15 +44,21 @@
     
     <!-- 执行脚本 -->
     <target name="buildRelease">
+        <echo message="Current OS Name is ${osName}"/>  
         <echo>Begin build release version ---> 构建开始</echo>
+        <antcall target="clean"/>
         <antcall target="init"/>
         <antcall target="code-gen"/>
     </target>
 
-    <!-- 初始化文件目录 -->
-    <target name="init">
+    <!-- 清除编译中间文件 -->
+    <target name="clean">
         <delete dir="${out.dir}" failonerror="false"/>
         <delete dir="${gen.dir}" failonerror="false"/>
+    </target>
+
+    <!-- 初始化文件目录 -->
+    <target name="init">        
         <mkdir dir="${out.dir}"/>
         <mkdir dir="${gen.dir}"/>
     </target>
