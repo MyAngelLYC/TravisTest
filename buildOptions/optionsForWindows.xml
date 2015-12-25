@@ -14,7 +14,7 @@
     <property name="aidl" location="${android.platform.tools.dir}/aidl${exe}" />
     <property name="aapt" location="${android.platform.tools.dir}/aapt${exe}" />
     <property name="dx" location="${android.platform.tools.dir}/dx${bat}" />
-    <property name="zipalign" location="${android.platform.tools.dir}/zipalign${exe}" />
+    <property name="zipalign" location="${android.tools.dir}/zipalign${exe}" />
     <property name="apkbuilder" location="${android.tools.dir}/apkbuilder${bat}" />
     <property name="jarsigner" location="${java.dir}/bin/jarsigner${exe}" />
 </project>
