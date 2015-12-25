@@ -35,7 +35,8 @@
     <property name="out.aidl.absolute.dir" location="${out.dir}/aidl" />
     <property name="out.dexed.absolute.dir" location="${out.dir}/dexedLibs" />
     <property name="out.unsigned.apk.file" location="${out.dir}/${ant.project.name}_unsigned.apk" />
-    <property name="out.signed.apk.file" location="${out.dir}/${ant.project.name}.apk" />
+    <property name="out.signed.apk.file" location="${out.dir}/${ant.project.name}_signed.apk" />
+    <property name="out.apk.file" location="${out.dir}/${ant.project.name}.apk" />
 
     <!-- Intermediate files -->
     <property name="dex.file.name" value="classes.dex" />
@@ -181,9 +182,9 @@
             <arg value="-keystore"/> 
             <arg value="${key.store}"/>
             <arg value="-storepass"/>
-            <arg value="lyc123"/>
+            <arg value="890930"/>
             <arg value="-keypass"/>
-            <arg value="lyc123"/>
+            <arg value="890930"/>
             <arg value="-digestalg"/>
             <arg value="SHA1"/>
             <arg value="-sigalg"/>
@@ -198,5 +199,12 @@
     <!-- 优化apk -->
     <target name="zipalign">
         <echo message="优化apk"/>
+        <exec executable="${zipalign}" failonerror="true">
+            <arg value="-f"/> 
+            <arg value="-v"/>
+            <arg value="4"/>
+            <arg value="${out.signed.apk.file}"/>
+            <arg value="${out.apk.file}"/>
+        </exec>
     </target>
 </project>
