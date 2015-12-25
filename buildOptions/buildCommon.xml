@@ -24,6 +24,7 @@
     <property name="jar.libs.dir" value="${project.dir}/libs" />
     <property name="native.libs.dir" location="${project.dir}/libs" />
     <property name="manifest.file" value="${project.dir}/AndroidManifest.xml" />
+    <property name="key.store" value="${project.dir}/release.keystore" />
 
     <!-- Output directories -->
     <property name="out.dir" value="${project.dir}/bin" />
@@ -33,6 +34,8 @@
     <property name="out.rs.libs.absolute.dir" location="${out.dir}/rsLibs" />
     <property name="out.aidl.absolute.dir" location="${out.dir}/aidl" />
     <property name="out.dexed.absolute.dir" location="${out.dir}/dexedLibs" />
+    <property name="out.unsigned.apk.file" location="${out.dir}/${ant.project.name}_unsigned.apk" />
+    <property name="out.signed.apk.file" location="${out.dir}/${ant.project.name}.apk" />
 
     <!-- Intermediate files -->
     <property name="dex.file.name" value="classes.dex" />
@@ -156,11 +159,40 @@
     <!-- 打包apk -->
     <target name="apkBuild">
         <echo message="打包apk"/>
+        <java classname="com.android.sdklib.build.ApkBuilderMain" failonerror="true">
+            <classpath>
+                <pathelement location="${android.tools.dir}/lib/sdklib.jar" />
+            </classpath>
+            <arg value="${out.unsigned.apk.file}" />
+            <arg value="-u" />
+            <arg value="-z" />
+            <arg value="${resource.package.file}" />
+            <arg value="-f" />
+            <arg value="${intermediate.dex.file}" />
+            <arg value="-rf" />
+            <arg value="${source.dir}" />
+        </java>
     </target>
 
     <!-- apk签名 -->
     <target name="apkSign">
         <echo message="apk签名"/>
+        <exec executable="${jarsigner}" failonerror="true">
+            <arg value="-keystore"/> 
+            <arg value="${key.store}"/>
+            <arg value="-storepass"/>
+            <arg value="890930"/>
+            <arg value="-keypass"/>
+            <arg value="890930"/>
+            <arg value="-digestalg"/>
+            <arg value="SHA1"/>
+            <arg value="-sigalg"/>
+            <arg value="MD5withRSA"/>
+            <arg value="-signedjar"/>
+            <arg value="${out.signed.apk.file}"/>
+            <arg value="${out.unsigned.apk.file}"/>
+            <arg value="release"/>
+        </exec> 
     </target>
 
     <!-- 优化apk -->
