@@ -14,7 +14,7 @@
     signapk 签名
     zipalign-helper 对齐优化
 -->
-<project name="TravisTest" default="buildRelease">
+<project name="buildCommon" default="buildRelease">
     <!-- Input directories -->
     <property name="project.dir" value="." />
     <property name="source.dir" value="${project.dir}/src" />
@@ -35,21 +35,6 @@
     <property name="out.aidl.absolute.dir" location="${out.dir}/aidl" />
     <property name="out.dexed.absolute.dir" location="${out.dir}/dexedLibs" />
 
-    <!-- tools location -->
-    <condition property="sdk.dir" value="D:\AndroidBuddle\sdk" else="/usr/local/android-sdk/"><os family="windows" /></condition>
-    <property name="android.jar" location="${sdk.dir}/platforms/android-19/android.jar" />
-    <property name="android.tools.dir" location="${sdk.dir}/tools" />
-    <property name="android.build.tools.dir" location="${sdk.dir}/build-tools/23.0.1" />
-    <property name="android.platform.tools.dir" location="${sdk.dir}/platform-tools" />
-    <condition property="exe" value=".exe" else=""><os family="windows" /></condition>
-    <condition property="bat" value=".bat" else=""><os family="windows" /></condition>
-    <property name="adb" location="${android.platform.tools.dir}/adb${exe}" />
-    <property name="lint" location="${android.tools.dir}/lint${bat}" />
-    <property name="aidl" location="${android.build.tools.dir}/aidl${exe}" />
-    <property name="aapt" location="${android.build.tools.dir}/aapt${exe}" />
-    <property name="dx" location="${android.build.tools.dir}/dx${bat}" />
-    <property name="zipalign" location="${android.build.tools.dir}/zipalign${exe}" />
-
     <!-- Intermediate files -->
     <property name="dex.file.name" value="classes.dex" />
     <property name="intermediate.dex.file" location="${out.absolute.dir}/${dex.file.name}" />
@@ -57,8 +42,7 @@
 
     <!-- Build property file -->
     <property name="out.build.prop.file" location="${out.absolute.dir}/build.prop" />
-
-
+    
     <!-- 执行脚本 -->
     <target name="buildRelease">
         <echo>Begin build release version ---> 构建开始</echo>
@@ -72,7 +56,6 @@
         <delete dir="${gen.dir}" failonerror="false"/>
         <mkdir dir="${out.dir}"/>
         <mkdir dir="${gen.dir}"/>
-        <echo message="osFamily:${os.family}, osName:${os.name}" />
     </target>
 
     <!-- 生成代码 -->
