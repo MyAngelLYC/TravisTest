@@ -2,7 +2,7 @@
 <project name="optionsForLinux" default="">
     <!-- tools location -->
     <property name="sdk.dir" value="/usr/local/android-sdk/" />
-    <property name="java.dir" value="D:\Java\jdk1.8.0_45" />
+    <property name="java.dir" value="/usr/lib/jvm/java-7-oracle" />
     <property name="android.jar" location="${sdk.dir}/platforms/android-19/android.jar" />
     <property name="android.tools.dir" location="${sdk.dir}/tools" />
     <property name="android.build.tools.dir" location="${sdk.dir}/build-tools/23.0.1" />
