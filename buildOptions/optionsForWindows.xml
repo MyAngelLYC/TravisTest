@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="TravisTest" default="">
+<project name="optionsForWindows" default="">
     <!-- tools location -->
     <property name="sdk.dir" value="D:\AndroidBuddle\sdk" />
     <property name="android.jar" location="${sdk.dir}/platforms/android-8/android.jar" />
