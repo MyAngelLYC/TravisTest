@@ -57,6 +57,8 @@
         <antcall target="init"/>
         <antcall target="code-gen"/>
         <antcall target="compile"/>
+        <antcall target="obfuscate"/>
+        <antcall target="dex"/>
     </target>
 
     <!-- 清除编译中间文件 -->
@@ -107,5 +109,15 @@
             <src path="${source.dir}" />
             <src path="${gen.dir}" />
         </javac>
+    </target>
+
+    <!-- 混淆代码 -->
+    <target name="obfuscate">
+        <echo message="混淆没有动态传参的方法"/>
+    </target>
+
+    <!-- dex打包代码 -->
+    <target name="dex">
+        <echo message="dex打包代码"/>
     </target>
 </project>
