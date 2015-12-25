@@ -38,6 +38,7 @@
     <property name="dex.file.name" value="classes.dex" />
     <property name="intermediate.dex.file" location="${out.dir}/${dex.file.name}" />
     <property name="resource.package.file.name" value="${ant.project.name}.ap_" />
+    <property name="resource.package.file" value="${out.res.absolute.dir}/${resource.package.file.name}" />
 
     <!-- Build property file -->
     <property name="out.build.prop.file" location="${out.dir}/build.prop" />
@@ -59,6 +60,10 @@
         <antcall target="compile"/>
         <antcall target="obfuscate"/>
         <antcall target="dex"/>
+        <antcall target="packRes"/>
+        <antcall target="apkBuild"/>
+        <antcall target="apkSign"/>
+        <antcall target="zipalign"/>
     </target>
 
     <!-- 清除编译中间文件 -->
@@ -74,6 +79,7 @@
         <mkdir dir="${gen.dir}"/>        
         <mkdir dir="${out.dir}"/>        
         <mkdir dir="${out.classes.absolute.dir}"/>
+        <mkdir dir="${out.res.absolute.dir}"/>
     </target>
 
     <!-- 生成代码 -->
@@ -126,5 +132,39 @@
             <arg value="--output=${intermediate.dex.file}"/>
             <arg path="${out.classes.absolute.dir}"/>
         </exec>
+    </target>
+
+    <!-- aapt打包资源文件 -->
+    <target name="packRes">
+        <echo message="aapt打包资源文件"/>
+        <exec executable="${aapt}" failonerror="true">
+            <arg value="package" />
+            <arg value="-f" />
+            <arg value="-M" />
+            <arg value="${manifest.file}" />
+            <arg value="-S" />
+            <arg value="${res.dir}" />
+            <arg value="-A" />
+            <arg value="${asset.dir}" />
+            <arg value="-I" />
+            <arg value="${android.jar}" />
+            <arg value="-F" />
+            <arg value="${resource.package.file}" />
+        </exec>
+    </target>
+
+    <!-- 打包apk -->
+    <target name="apkBuild">
+        <echo message="打包apk"/>
+    </target>
+
+    <!-- apk签名 -->
+    <target name="apkSign">
+        <echo message="apk签名"/>
+    </target>
+
+    <!-- 优化apk -->
+    <target name="zipalign">
+        <echo message="优化apk"/>
     </target>
 </project>
