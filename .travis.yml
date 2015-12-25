@@ -5,14 +5,6 @@ android:
     - platform-tools    
     - build-tools-23.0.1
     - android-19
-before_install:
-  - cd /usr/lib
-  - ls
-  - cd jvm
-  - ls
-  - cd java-7-oracle
-  - ls
-  - cd jre
-  - ls
+before_install: true
 install: true
 script: ant buildRelease
