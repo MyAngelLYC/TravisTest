@@ -7,5 +7,6 @@
     <condition property="osName" value="Mac"><os family="mac"/></condition>
     <condition property="osName" value="Linux"><os name="Linux"/></condition>
     <echo message="Current OS Name is ${osName}"/>  
-    <import file="buildOptions/buildOn${osName}.xml"/> 
+    <import file="buildOptions/optionsFor${osName}.xml"/>
+    <import file="buildOptions/buildCommon.xml"/>
 </project>
