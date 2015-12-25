@@ -82,8 +82,7 @@
         <echo message="生成编译所需目录结构"/>
         <mkdir dir="${gen.dir}"/>        
         <mkdir dir="${out.dir}"/>
-        <available file="${assets.dir}" property="assetsDIR_exist"/>
-        <mkdir dir="${assets.dir}" unless="assetsDIR_exist"/>      
+        <mkdir dir="${assets.dir}"/>      
         <mkdir dir="${out.classes.absolute.dir}"/>
         <mkdir dir="${out.res.absolute.dir}"/>
     </target>
