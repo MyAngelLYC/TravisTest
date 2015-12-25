@@ -36,11 +36,11 @@
 
     <!-- Intermediate files -->
     <property name="dex.file.name" value="classes.dex" />
-    <property name="intermediate.dex.file" location="${out.absolute.dir}/${dex.file.name}" />
+    <property name="intermediate.dex.file" location="${out.dir}/${dex.file.name}" />
     <property name="resource.package.file.name" value="${ant.project.name}.ap_" />
 
     <!-- Build property file -->
-    <property name="out.build.prop.file" location="${out.absolute.dir}/build.prop" />
+    <property name="out.build.prop.file" location="${out.dir}/build.prop" />
     
     <!-- compilation options -->
     <property name="java.encoding" value="UTF-8" />
@@ -79,6 +79,7 @@
     <!-- 生成代码 -->
     <target name="code-gen">
         <echo message="生成R.java文件"/> 
+        <!-- aapt -->
         <exec executable="${aapt}" failonerror="true">
           <arg value="package"/>
           <arg value="-m"/>
@@ -91,6 +92,7 @@
           <arg value="-I"/>
           <arg value="${android.jar}"/>
         </exec>
+        <!-- aidl 暂无-->
     </target>
 
     <!-- 编译代码为.class文件 -->
@@ -111,7 +113,7 @@
         </javac>
     </target>
 
-    <!-- 混淆代码 -->
+    <!-- proguard混淆代码 -->
     <target name="obfuscate">
         <echo message="混淆没有动态传参的方法"/>
     </target>
@@ -119,5 +121,10 @@
     <!-- dex打包代码 -->
     <target name="dex">
         <echo message="dex打包代码"/>
+        <exec executable="${dx}" failonerror="true">
+            <arg value="--dex"/>
+            <arg value="--output=${intermediate.dex.file}"/>
+            <arg path="${out.classes.absolute.dir}"/>
+        </exec>
     </target>
 </project>
