@@ -181,9 +181,9 @@
             <arg value="-keystore"/> 
             <arg value="${key.store}"/>
             <arg value="-storepass"/>
-            <arg value="890930"/>
+            <arg value="lyc123"/>
             <arg value="-keypass"/>
-            <arg value="890930"/>
+            <arg value="lyc123"/>
             <arg value="-digestalg"/>
             <arg value="SHA1"/>
             <arg value="-sigalg"/>
